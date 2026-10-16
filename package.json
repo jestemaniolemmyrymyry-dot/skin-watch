@@ -1,0 +1,10 @@
+{
+  "name": "skin-market-watch",
+  "version": "2.0.0",
+  "description": "Compares CS2 skin prices on Steam and CSFloat. Collected hourly by GitHub Actions, hosted on GitHub Pages.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=18.17" },
+  "scripts": { "collect": "node scripts/collect.js" },
+  "license": "MIT"
+}

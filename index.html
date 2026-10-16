@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Skin market watch: Steam vs CSFloat</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <h1 class="brand">Skin market watch</h1>
+      <p class="status" id="status" aria-live="polite">Loading prices…</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero" aria-labelledby="headline">
+      <h2 id="headline" class="headline">Waiting for the first price check</h2>
+      <p class="sub" id="subline"></p>
+      <div class="avail" id="avail" hidden>
+        <div class="avail-bar" id="availBar" role="img"></div>
+        <ul class="avail-key" id="availKey"></ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="movesTitle" class="moves">
+      <div class="section-head">
+        <h2 id="movesTitle">Price moves</h2>
+        <div class="seg" role="tablist" aria-label="Time window">
+          <button role="tab" aria-selected="true" data-win="day">Last 24 hours</button>
+          <button role="tab" aria-selected="false" data-win="week">Last 7 days</button>
+        </div>
+      </div>
+      <p class="note" id="winNote"></p>
+      <div class="markets">
+        <article class="market steam" id="mk-steam"></article>
+        <article class="market csfloat" id="mk-csfloat"></article>
+      </div>
+    </section>
+
+    <section aria-labelledby="allTitle" class="all">
+      <div class="section-head">
+        <h2 id="allTitle">All tracked skins</h2>
+        <label class="search">
+          <span class="visually-hidden">Search skins</span>
+          <input id="q" type="search" placeholder="Search skins" autocomplete="off">
+        </label>
+      </div>
+      <div class="chips" role="group" aria-label="Filter by availability">
+        <button class="chip" aria-pressed="true" data-f="all">All</button>
+        <button class="chip" aria-pressed="false" data-f="both">On both</button>
+        <button class="chip" aria-pressed="false" data-f="steam">Steam only</button>
+        <button class="chip" aria-pressed="false" data-f="csfloat">CSFloat only</button>
+      </div>
+      <div class="table-scroll">
+        <table class="grid" id="grid">
+          <thead>
+            <tr>
+              <th scope="col"><button data-sort="name">Skin</button></th>
+              <th scope="col" class="num"><button data-sort="steam">Steam</button></th>
+              <th scope="col" class="num"><button data-sort="csfloat">CSFloat</button></th>
+              <th scope="col"><button data-sort="gap">Price gap</button></th>
+              <th scope="col" class="num"><button data-sort="sChange">Steam change</button></th>
+              <th scope="col" class="num"><button data-sort="cChange">CSFloat change</button></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p class="empty" id="empty" hidden></p>
+    </section>
+
+    <footer class="foot">
+      <p>Steam prices are the lowest listing and include Steam's ~15% fee. CSFloat prices are the cheapest buy-now listing; listing counts stop at 50. All prices in US dollars.</p>
+    </footer>
+  </main>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

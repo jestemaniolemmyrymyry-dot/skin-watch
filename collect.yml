@@ -1,0 +1,43 @@
+name: Collect prices
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # every hour at :17 (GitHub may start it a few minutes late)
+  workflow_dispatch:        # adds a "Run workflow" button
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-prices
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Collect prices
+        env:
+          CSFLOAT_API_KEY: ${{ secrets.CSFLOAT_API_KEY }}
+          STEAM_TOP_N: ${{ vars.STEAM_TOP_N || '0' }}
+        run: node scripts/collect.js
+
+      - name: Save new data
+        run: |
+          git config user.name "price-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Prices $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git pull --rebase
+            git push
+          fi
